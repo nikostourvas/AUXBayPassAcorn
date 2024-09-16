@@ -30,24 +30,25 @@ generate_complementary_Baypass_inputs = function(x) {
               "Latitude", "Longitude", "elevation")) 
 
   # write the column names (envfactors) to a new file
-  write.table(colnames(envfactors_sub), paste0("data/", x, "_efile_envfactor_names"), sep = " ", 
+  envfactor_names = colnames(envfactors_sub)
+  write.table(envfactor_names, paste0("data/", x, "_efile_envfactor_names"), sep = " ", 
               col.names=FALSE, row.names=FALSE, quote=FALSE)
 
   # Transpose the envfactors_sub dataframe
   envfactors_sub = t(envfactors_sub)
 
-  # Write the filtered climate/topographic data to a new file.
-  write.table(envfactors_sub, paste0("data/", x, "_efile"), sep = " ", 
-              col.names=FALSE, row.names=FALSE, quote=FALSE)
-  
-  # Create the ecotype (contrast) file
-  envfactors_sub = envfactors %>% 
-    filter(Plot_ID %in% pops) %>% 
-    select(c("Site_description")) %>% 
-    t()
-  # Write the filtered climate/topographic data to a new file.
-  write.table(envfactors_sub, paste0("data/", x, "_ecotype"), sep = " ", 
-              col.names=FALSE, row.names=FALSE, quote=FALSE)
+  # # Write the filtered climate/topographic data to a new file.
+  # write.table(envfactors_sub, paste0("data/", x, "_efile"), sep = " ", 
+  #             col.names=FALSE, row.names=FALSE, quote=FALSE)
+
+  # Write each row to a new file.
+  # Each row represents one of the environmental factors for all populations
+  # Each produced file should be named as 'data/<dataset_name>_efile_<environmental_factor_name>'
+  # The environmental factor name is not provided in the input file. It should be extracted from the vector 'envfactor_names'
+  for (i in 1:length(envfactor_names)) {
+    write(envfactors_sub[i,], paste0("data/", x, "_efile_", envfactor_names[i]), 
+          sep = " ", ncolumns=ncol(envfactors_sub))
+  }
 }
 
 # Apply the function to all datasets

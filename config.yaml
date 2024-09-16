@@ -51,19 +51,7 @@ resources:
     runtime: 90
     mem_mb: 8000
     slurm_partition: "batch"
-  run_baypass_c2:
-    runtime: 2880
-    mem_mb: 2000
-    slurm_partition: "htc"
-  c2_diagnostics:
-    runtime: 30
-    mem_mb: 8000
-    slurm_partition: "batch"
   concatenate_results_covariate:
     runtime: 180
     mem_mb: 36000
-    slurm_partition: "batch"
-  concatenate_results_c2:
-    runtime: 120
-    mem_mb: 24000
     slurm_partition: "batch"

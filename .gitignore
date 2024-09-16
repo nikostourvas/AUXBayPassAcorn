@@ -1,2 +1,14 @@
+/Results_Devrim
+/baypass.log
+/dag.png
 /data
-/poolfstat_baypass_0124
+/logs
+/results*
+/Data
+.snakemake/
+.vscode/
+*.Rproj
+.Rproj.user
+.Rhistory
+poolfstat_subsample_test.R
+poolfstat_baypass_0124
