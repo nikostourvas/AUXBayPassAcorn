@@ -1,0 +1,69 @@
+# Path to the Singularity container
+singularity: "/home/nikos/other_apps/bin/poolseq_tools_0.2.11.sif"
+#singularity: "/mnt/forgenet_a/container_images/poolseq_tools_0.2.10.sif"
+#singularity: "/home/geneticsShare/container_images/poolseq_tools_0.2.12.sif"
+
+# List of sample names
+samples:
+  - ACORN_Qpet_1EA
+
+# Paths to the environmental factors and poolsizes files
+input_files:
+  envfactors: "data/20240915_ACORN_dem_TOPO_by_POP_NT.csv"
+  poolsizes: "data/20240307_poolsizes_per_pop.csv"
+
+# Parameters for the analysis
+parameters:
+  n_subs: 12  # Number of subsets for splitting the baypass input file
+  n_core_replicates: 3  # Number of replicates for the core model
+  min_haploid_pool_size: 15  # Minimum haploid pool size
+  n_pilot: 100  # Number of pilot runs
+
+# Set resources settings for each rule
+# This is only useful if you are running the pipeline on a HPC cluster
+# If not, you can ignore this section
+resources:
+  all:
+    runtime: 10
+    mem_mb: 1000
+    slurm_partition: "testing"
+  generate_complementary_inputs:
+    runtime: 5
+    mem_mb: 1000
+    slurm_partition: "batch"
+  vcf2genobaypass:
+    runtime: 90
+    mem_mb: 24000
+    slurm_partition: "batch"
+  run_baypass_core:
+    runtime: 1440
+    mem_mb: 1000
+    slurm_partition: "batch"
+  compare_omega:
+    runtime: 30
+    mem_mb: 2000
+    slurm_partition: "batch"
+  run_baypass_covariate:
+    runtime: 12960
+    mem_mb: 2000
+    slurm_partition: "htc"
+  baypass_covariate_diagnostics:
+    runtime: 90
+    mem_mb: 8000
+    slurm_partition: "batch"
+  run_baypass_c2:
+    runtime: 2880
+    mem_mb: 2000
+    slurm_partition: "htc"
+  c2_diagnostics:
+    runtime: 30
+    mem_mb: 8000
+    slurm_partition: "batch"
+  concatenate_results_covariate:
+    runtime: 180
+    mem_mb: 36000
+    slurm_partition: "batch"
+  concatenate_results_c2:
+    runtime: 120
+    mem_mb: 24000
+    slurm_partition: "batch"
